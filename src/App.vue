@@ -6,7 +6,7 @@ import Greet from "./components/Greet.vue";
 
 <template>
   <div class="container">
-    <h1>Welcome to Tauri!</h1>
+    <h1>Welcome to Tauri V2 App Playground!</h1>
 
     <div class="row">
       <a href="https://vitejs.dev" target="_blank">
@@ -20,7 +20,8 @@ import Greet from "./components/Greet.vue";
       </a>
     </div>
 
-    <p>Click on the Tauri, Vite, and Vue logos to learn more.</p>
+    <p>Learning more features on creating tauri V2 app:</p>
+    <p> - System Tray</p>
 
     <Greet />
   </div>

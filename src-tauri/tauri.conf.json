@@ -11,7 +11,7 @@
   "app": {
     "windows": [
       {
-        "title": "tauri-app-playground",
+        "title": "Tauri V2 App Playground",
         "width": 800,
         "height": 600
       }

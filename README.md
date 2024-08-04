@@ -16,7 +16,7 @@ Since TypeScript cannot handle type information for `.vue` imports, they are shi
 You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
 
 
-## Creating the app:
+## Creating the Tauri V2 app:
 ```
 yarn create tauri-app --rc
 yarn create v1.22.22
@@ -50,3 +50,12 @@ For iOS development, run:
 
 ✨  Done in 28.68s.
 ```
+
+
+### References:
+
+Tauri v2 Plugin workspace:
+https://github.com/tauri-apps/plugins-workspace/tree/v2
+
+Tauri v1 Personal Document:
+https://jonaskruckenberg.github.io/tauri-docs-wip/introduction.html
