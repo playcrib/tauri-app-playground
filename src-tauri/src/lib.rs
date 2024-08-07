@@ -1,4 +1,5 @@
 #[cfg(desktop)]
+mod download;
 mod tray;
 
 use tauri::{
@@ -34,7 +35,7 @@ pub fn run() {
 
     #[allow(unused_mut)]
     let mut app = builder
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler(tauri::generate_handler![greet, download::download])
         .build(tauri::generate_context!())
         .expect("error while building tauri application");
 

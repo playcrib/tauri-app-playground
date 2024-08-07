@@ -5,6 +5,19 @@
   "windows": ["main"],
   "permissions": [
     "core:default",
+    {
+      "identifier": "shell:allow-execute",
+      "allow": [
+        {
+          "args": [
+            {"validator": "\\S+"}
+          ],
+          "cmd": "",
+          "name": "binaries/yt-dlp",
+          "sidecar": true
+        }
+      ]
+    },
     "shell:allow-open"
   ]
 }

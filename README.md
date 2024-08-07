@@ -17,6 +17,8 @@ You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/
 
 ## Features:
   ✔ System Tray
+  ✔ Sidecar
+
 
 ## Creating the Tauri V2 app:
 ```
