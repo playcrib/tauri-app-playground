@@ -9,21 +9,21 @@ use tauri_plugin_shell::process::CommandEvent;
 #[derive(Clone, Serialize)]
 #[serde(rename_all = "camelCase", tag = "event", content = "data")]
 pub enum DownloadEvent<'a> {
-  #[serde(rename_all = "camelCase")]
-  Started {
-    url: &'a str,
-    download_id: usize,
-    content_length: usize,
-  },
-  #[serde(rename_all = "camelCase")]
-  Progress {
-    download_id: usize,
-    chunk_length: usize,
-  },
-  #[serde(rename_all = "camelCase")]
-  Finished {
-    download_id: usize,
-  },
+    #[serde(rename_all = "camelCase")]
+    Started {
+        url: &'a str,
+        download_id: usize,
+        content_length: usize,
+    },
+    #[serde(rename_all = "camelCase")]
+    Progress {
+        download_id: usize,
+        chunk_length: usize,
+    },
+    #[serde(rename_all = "camelCase")]
+    Finished {
+        download_id: usize,
+    },
 }
 
 #[tauri::command]
@@ -47,7 +47,7 @@ pub fn download(app: AppHandle, url: String, on_event: Channel<DownloadEvent>) {
 
     let app_handle = app.clone();
     tauri::async_runtime::spawn(async move {
-        // read events such as stdout
+        // Read events such as stdout
         while let Some(event) = rx.recv().await {
             if let CommandEvent::Stdout(line) = event {
                 // println!("{:?}", String::from_utf8(line).unwrap());
