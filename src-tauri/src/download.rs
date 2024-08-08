@@ -1,5 +1,5 @@
 
-use tauri::{AppHandle, ipc::Channel};
+use tauri::{AppHandle, ipc::Channel, Emitter};
 use serde::Serialize;
 
 use tauri_plugin_shell::ShellExt;
@@ -45,24 +45,23 @@ pub fn download(app: AppHandle, url: String, on_event: Channel<DownloadEvent>) {
         content_length,
     }).unwrap();
 
+    let app_handle = app.clone();
     tauri::async_runtime::spawn(async move {
         // read events such as stdout
         while let Some(event) = rx.recv().await {
             if let CommandEvent::Stdout(line) = event {
-                println!("{:?}", String::from_utf8(line).unwrap());
-                // window
-                //     .emit("message", Some(format!("'{}'", line)))
-                //     .expect("failed to emit event");
-                // write to stdin
-                // child.write("message from Rust\n".as_bytes()).unwrap();
+                // println!("{:?}", String::from_utf8(line).unwrap());
+                app_handle.emit("rs2js",
+                    Some(format!("'{}'", String::from_utf8(line).unwrap()))
+                ).expect("failed to emit event");
             }
         }
     });
 
     for chunk_length in [15, 150, 35, 500, 300] {
         on_event.send(DownloadEvent::Progress {
-        download_id,
-        chunk_length,
+            download_id,
+            chunk_length,
         }).unwrap();
     }
 

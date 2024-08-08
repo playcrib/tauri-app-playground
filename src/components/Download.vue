@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { listen } from '@tauri-apps/api/event'
 import { invoke, Channel } from "@tauri-apps/api/core";
 import { Command } from '@tauri-apps/plugin-shell';
 
 const output = ref("");
+const outputs = ref([]);
 const name = ref("");
 
 type DownloadEvent =
@@ -35,6 +37,12 @@ onEvent.onmessage = (message) => {
   output.value = message.event
 };
 
+await listen('rs2js', (event) => {
+  console.log("js: rs2js: " + event)
+  let input = event.payload
+  outputs.value.push({ timestamp: Date.now(), message: input })
+})
+
 async function download() {
   // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
   // const command = Command.sidecar('binaries/yt-dlp', [
@@ -56,4 +64,5 @@ async function download() {
   </form>
 
   <p>{{ output }}</p>
+  <p>{{ outputs }}</p>
 </template>
