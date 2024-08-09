@@ -27,7 +27,6 @@ import HelloWorld from "./components/HelloWorld.vue";
     <Suspense>
       <Download />
     </Suspense>
-    <HelloWorld />
   </div>
 </template>
 

@@ -7,6 +7,7 @@ import { Command } from '@tauri-apps/plugin-shell';
 const output = ref("");
 const outputs = ref([]);
 const name = ref("");
+const downloads = ref([]);
 
 type DownloadEvent =
   | {
@@ -41,6 +42,12 @@ await listen('rs2js', (event) => {
   console.log("js: rs2js: " + event)
   let input = event.payload
   outputs.value.push({ timestamp: Date.now(), message: input })
+  let item = downloads.value.find(x => 'url' in x && x.url == name.value)
+  if (item) {
+    item.status += 1
+  } else {
+    downloads.value.push({ url: name.value, status: 1 })
+  }
 })
 
 async function download() {
@@ -59,9 +66,39 @@ async function download() {
 
 <template>
   <form class="row" @submit.prevent="download">
-    <input id="download-input" v-model="name" placeholder="Enter a url..." />
-    <button type="submit">Download</button>
+    <!-- <input id="download-input" v-model="name" placeholder="Enter a url..." /> -->
+    <v-text-field
+      v-model="name"
+      :counter="10"
+      label="Download URL"
+      hide-details
+      required
+    ></v-text-field>
+    <!-- <button type="submit">Download</button> -->
+    <v-btn type="submit" text="Download"></v-btn>
   </form>
+
+  <v-table>
+    <thead>
+      <tr>
+        <th class="text-left">
+          URL
+        </th>
+        <th class="text-left">
+          Status
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        v-for="item in downloads"
+        :key="item.name"
+      >
+        <td class="text-left">{{ item.url }}</td>
+        <td class="text-left">{{ item.status }}</td>
+      </tr>
+    </tbody>
+  </v-table>
 
   <p>{{ output }}</p>
   <p>{{ outputs }}</p>

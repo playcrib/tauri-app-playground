@@ -3,20 +3,20 @@
     <thead>
       <tr>
         <th class="text-left">
-          Name
+          URL
         </th>
         <th class="text-left">
-          Calories
+          Status
         </th>
       </tr>
     </thead>
     <tbody>
       <tr
-        v-for="item in desserts"
+        v-for="item in downloads"
         :key="item.name"
       >
-        <td class="text-left">{{ item.name }}</td>
-        <td class="text-left">{{ item.calories }}</td>
+        <td class="text-left">{{ item.url }}</td>
+        <td class="text-left">{{ item.status }}</td>
       </tr>
     </tbody>
   </v-table>
@@ -26,46 +26,10 @@
   export default {
     data () {
       return {
-        desserts: [
+        downloads: [
           {
-            name: 'Frozen Yogurt',
-            calories: 159,
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
+            url: 'Frozen Yogurt',
+            status: 159,
           },
         ],
       }
