@@ -4,7 +4,6 @@ import { listen } from '@tauri-apps/api/event'
 import { invoke, Channel } from "@tauri-apps/api/core";
 
 const output = ref("");
-const outputs = ref([]);
 const name = ref("");
 
 type DownloadValue =
@@ -72,18 +71,29 @@ async function download() {
 </script>
 
 <template>
-  <form class="row" @submit.prevent="download">
-    <!-- <input id="download-input" v-model="name" placeholder="Enter a url..." /> -->
-    <v-text-field
-      v-model="name"
-      :counter="10"
-      label="Download URL"
-      hide-details
-      required
-    ></v-text-field>
-    <!-- <button type="submit">Download</button> -->
-    <v-btn type="submit" text="Download"></v-btn>
-  </form>
+  <v-card
+    prepend-icon="mdi-earth"
+    title="Downloader"
+    subtitle="Make request and get content">
+
+    <v-card-text class="d-flex align-center">
+
+      <v-text-field
+        label="Url"
+        hide-details
+        v-model="name"
+      />
+
+      <v-btn
+        color="primary"
+        class="ms-5"
+        :disabled="!name || !name.startsWith('http')"
+        @click="download()">
+        Download
+      </v-btn>
+
+    </v-card-text>
+  </v-card>
 
   <v-table>
     <thead>
@@ -108,5 +118,4 @@ async function download() {
   </v-table>
 
   <p>{{ output }}</p>
-  <p>{{ outputs }}</p>
 </template>

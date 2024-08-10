@@ -9,21 +9,6 @@ import Download from "./components/Download.vue";
   <div class="container">
     <h1>Welcome to Tauri V2 App Playground!</h1>
 
-    <div class="row">
-      <a href="https://vitejs.dev" target="_blank">
-        <img src="/vite.svg" class="logo vite" alt="Vite logo" />
-      </a>
-      <a href="https://tauri.app" target="_blank">
-        <img src="/tauri.svg" class="logo tauri" alt="Tauri logo" />
-      </a>
-      <a href="https://vuejs.org/" target="_blank">
-        <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-      </a>
-    </div>
-
-    <p>Learning more features on creating tauri V2 app:</p>
-    <p> - System Tray</p>
-
     <Suspense>
       <Download />
     </Suspense>
