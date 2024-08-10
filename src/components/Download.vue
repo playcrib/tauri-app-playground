@@ -2,6 +2,8 @@
 import { ref } from "vue";
 import { listen } from '@tauri-apps/api/event'
 import { invoke, Channel } from "@tauri-apps/api/core";
+import { open } from "@tauri-apps/plugin-dialog";
+import { downloadDir } from "@tauri-apps/api/path";
 
 const output = ref("");
 const name = ref("");
@@ -68,6 +70,14 @@ async function download() {
     onEvent,
   });
 }
+
+async function save_to() {
+  const selected = await open({
+    directory: true,
+    defaultPath: await downloadDir(),
+  });
+  console.log(selected);
+}
 </script>
 
 <template>
@@ -76,7 +86,7 @@ async function download() {
       <v-toolbar-title class="text-h6" text="Downloader"></v-toolbar-title>
 
       <template v-slot:append>
-        <v-btn icon="mdi-dots-vertical"></v-btn>
+        <v-btn icon="mdi-dots-vertical" @click="save_to()"></v-btn>
       </template>
     </v-toolbar>
 

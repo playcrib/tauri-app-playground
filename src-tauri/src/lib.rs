@@ -3,10 +3,14 @@ mod download;
 mod tray;
 
 use tauri::{
+    menu::{MenuBuilder, MenuItemBuilder},
+    tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
+    Manager,
+};
+use tauri::{
     webview::{PageLoadEvent, WebviewWindowBuilder},
     App, AppHandle, Emitter, Listener, RunEvent, WebviewUrl,
 };
-use tauri::{menu::{MenuBuilder, MenuItemBuilder}, tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent}, Manager};
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 
@@ -19,6 +23,7 @@ fn greet(name: &str) -> String {
 pub fn run() {
     #[allow(unused_mut)]
     let mut builder = tauri::Builder::default()
+        .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_shell::init())
         .setup(move |app| {
             #[cfg(desktop)]
