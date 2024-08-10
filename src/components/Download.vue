@@ -2,12 +2,17 @@
 import { ref } from "vue";
 import { listen } from '@tauri-apps/api/event'
 import { invoke, Channel } from "@tauri-apps/api/core";
-import { Command } from '@tauri-apps/plugin-shell';
 
 const output = ref("");
 const outputs = ref([]);
 const name = ref("");
-const downloads = ref([]);
+
+type DownloadValue =
+  | {
+      url: string;
+      status: number;
+    };
+const downloads = ref<Array<DownloadValue>>([]);
 
 type DownloadEvent =
   | {
@@ -32,6 +37,8 @@ type DownloadEvent =
       };
     };
 
+
+
 const onEvent = new Channel<DownloadEvent>();
 onEvent.onmessage = (message) => {
   console.log(`got download event ${message.event}, ${message.data}`);
@@ -40,8 +47,8 @@ onEvent.onmessage = (message) => {
 
 await listen('rs2js', (event) => {
   console.log("js: rs2js: " + event)
-  let input = event.payload
-  outputs.value.push({ timestamp: Date.now(), message: input })
+  // let input = event.payload
+  // outputs.value.push({ timestamp: Date.now(), message: input })
   let item = downloads.value.find(x => 'url' in x && x.url == name.value)
   if (item) {
     item.status += 1
@@ -92,7 +99,7 @@ async function download() {
     <tbody>
       <tr
         v-for="item in downloads"
-        :key="item.name"
+        :key="item.url"
       >
         <td class="text-left">{{ item.url }}</td>
         <td class="text-left">{{ item.status }}</td>
