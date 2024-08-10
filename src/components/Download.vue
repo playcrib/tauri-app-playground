@@ -71,10 +71,14 @@ async function download() {
 </script>
 
 <template>
-  <v-card
-    prepend-icon="mdi-earth"
-    title="Downloader"
-    subtitle="Make request and get content">
+  <v-card>
+    <v-toolbar color="transparent">
+      <v-toolbar-title class="text-h6" text="Downloader"></v-toolbar-title>
+
+      <template v-slot:append>
+        <v-btn icon="mdi-dots-vertical"></v-btn>
+      </template>
+    </v-toolbar>
 
     <v-card-text class="d-flex align-center">
 
