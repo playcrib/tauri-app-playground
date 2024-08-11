@@ -11,7 +11,7 @@ const name = ref("");
 type DownloadValue =
   | {
       url: string;
-      status: number;
+      status: string;
     };
 const downloads = ref<Array<DownloadValue>>([]);
 
@@ -48,23 +48,15 @@ onEvent.onmessage = (message) => {
 
 await listen('rs2js', (event) => {
   console.log("js: rs2js: " + event)
-  // let input = event.payload
-  // outputs.value.push({ timestamp: Date.now(), message: input })
   let item = downloads.value.find(x => 'url' in x && x.url == name.value)
   if (item) {
-    item.status += 1
+    item.status = event.payload as string
   } else {
-    downloads.value.push({ url: name.value, status: 1 })
+    downloads.value.push({ url: name.value, status: event.payload as string })
   }
 })
 
 async function download() {
-  // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-  // const command = Command.sidecar('binaries/yt-dlp', [
-  //   name.value
-  // ]);
-  // output.value = await command.execute();
-
   await invoke('download', {
     url: name.value,
     onEvent,
