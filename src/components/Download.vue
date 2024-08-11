@@ -5,8 +5,21 @@ import { invoke, Channel } from "@tauri-apps/api/core";
 import { open } from "@tauri-apps/plugin-dialog";
 import { downloadDir } from "@tauri-apps/api/path";
 
+import ViewSettings from "./settings/ViewSettings.vue";
+import { show } from "@tauri-apps/api/app";
+
 const output = ref("");
 const name = ref("");
+
+// Settings
+const showDialog = ref(false);
+const walkParams = ref({
+    target_directory: "",
+    regex_filter: [],
+    regex_invert_filter: [],
+    ignore_directories: [],
+    use_apparent_size: false,
+});
 
 type DownloadValue =
   | {
@@ -74,12 +87,13 @@ async function save_to() {
 
 <template>
   <v-card>
-    <v-toolbar color="transparent">
-      <v-toolbar-title class="text-h6" text="Downloader"></v-toolbar-title>
+    <v-toolbar fluid class="d-flex flex-row">
+      <v-toolbar-title class="text-h5" text="Downloader"></v-toolbar-title>
 
       <template v-slot:append>
-        <v-btn icon="mdi-dots-vertical" @click="save_to()"></v-btn>
+        <v-btn icon="mdi-dots-vertical" @click="showDialog = true"></v-btn>
       </template>
+      <!-- <v-icon color="blue" icon="mdi-cog" @click="save_to()"></v-icon> -->
     </v-toolbar>
 
     <v-card-text class="d-flex align-center">
@@ -124,4 +138,5 @@ async function save_to() {
   </v-table>
 
   <p>{{ output }}</p>
+  <ViewSettings v-model:showDialog="showDialog" v-model:walkParams="walkParams"></ViewSettings>
 </template>
